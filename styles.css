@@ -3354,3 +3354,13 @@ details {
     margin-top: auto;
   }
 }
+
+/* Touch devices apply :hover on tap and it "sticks", which would freeze the
+   auto-scrolling carousels (looked like the marquee only ran once). Where there's
+   no true hover capability, force the carousels to keep running. */
+@media (hover: none) {
+  .scene-carousel .scene-track,
+  .result-carousel .result-track {
+    animation-play-state: running !important;
+  }
+}
