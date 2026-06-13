@@ -2092,33 +2092,38 @@ details p {
     line-height: 1;
   }
 
+  /* Manual horizontal swipe (same pattern as .feature-grid) — no auto-scroll */
   .scene-carousel {
-    overflow: hidden;
     width: calc(100vw - 22px);
     margin-right: -22px;
-    padding-bottom: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 2px 22px 12px 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .scene-carousel::-webkit-scrollbar {
+    display: none;
   }
 
   .scene-track {
     display: flex;
-    width: max-content;
-    animation: scene-marquee 38s linear infinite;
-  }
-
-  .scene-carousel:hover .scene-track {
-    animation-play-state: paused;
-  }
-
-  .scene-set,
-  .scene-set[aria-hidden="true"] {
-    display: flex;
-    flex: none;
     gap: 14px;
-    padding-right: 14px;
+    width: max-content;
+  }
+
+  .scene-set {
+    display: contents;
+  }
+
+  .scene-set[aria-hidden="true"] {
+    display: none;
   }
 
   .scene-card {
     flex: 0 0 min(82vw, 330px);
+    scroll-snap-align: start;
   }
 
   .features-section .feature-stories {
@@ -3274,28 +3279,25 @@ details {
   }
 }
 
-/* ---- scenarios: marquee carousel on all screen sizes ---- */
-.scene-carousel {
-  overflow: hidden;
-  padding-bottom: 12px;
-}
+/* ---- scenarios: static grid on desktop; manual swipe on mobile (see ≤640px block) ---- */
+@media (min-width: 641px) {
+  .scene-carousel {
+    padding-bottom: 12px;
+  }
 
-.scene-track {
-  display: flex;
-  width: max-content;
-  animation: scene-marquee 38s linear infinite;
-}
+  .scene-track {
+    display: contents;
+  }
 
-.scene-carousel:hover .scene-track {
-  animation-play-state: paused;
-}
+  .scene-grid.scene-set {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
 
-.scene-grid.scene-set,
-.scene-set[aria-hidden="true"] {
-  display: flex;
-  flex: none;
-  gap: 16px;
-  padding-right: 16px;
+  .scene-set[aria-hidden="true"] {
+    display: none;
+  }
 }
 
 .scene-card {
