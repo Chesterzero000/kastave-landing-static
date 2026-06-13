@@ -38,12 +38,11 @@
     </script>
     <!-- End Meta Pixel Code -->
     <meta name="theme-color" content="#03161b" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Self-hosted Outfit + Inter (./assets/fonts/). Served from our own origin/CDN,
+         so the brand fonts load fast worldwide AND work behind the GFW — no dependency
+         on Google or any third-party mirror. unicode-range means each visitor only
+         downloads the subset their text needs. -->
+    <link rel="stylesheet" href="./assets/fonts/fonts.css" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -69,7 +68,7 @@
     <header class="site-header">
       <a class="brand" href="#top" aria-label="Kastave home">
         <span class="brand-mark" aria-hidden="true">
-          <img src="./assets/kastave-logo.png" alt="" />
+          <img src="./assets/kastave-logo.webp" alt="" />
         </span>
       </a>
       <nav class="nav-links" aria-label="Primary navigation">
@@ -98,7 +97,7 @@
           loop
           playsinline
           preload="metadata"
-          poster="./assets/hero-kastave-lake.jpg"
+          poster="./assets/hero-kastave-lake.webp"
           aria-hidden="true"
         >
           <source src="./assets/hero-kastave-lake.mp4" type="video/mp4" />
@@ -111,8 +110,8 @@
             mapping the bottom in 3D — so you cast at structure, not at hope.
           </p>
           <figure class="mobile-product-peek" aria-label="Kastave product preview">
-            <img
-              src="./assets/hero-kastave-lake.jpg"
+            <img fetchpriority="high" decoding="async"
+              src="./assets/hero-kastave-lake.webp"
               alt="Kastave sonar floating on lake water"
             />
           </figure>
@@ -193,8 +192,8 @@
         <div class="feature-stories">
           <article class="feature-story">
             <div class="feature-story-image">
-              <img
-                src="./assets/feature-app-3d-scan.jpg"
+              <img loading="lazy" decoding="async"
+                src="./assets/feature-app-3d-scan.webp"
                 alt="Kastave app showing a 3D lake scan while the device floats nearby"
               />
             </div>
@@ -216,8 +215,8 @@
 
           <article class="feature-story feature-story-reverse">
             <div class="feature-story-image">
-              <img
-                src="./assets/feature-structure-map.jpg"
+              <img loading="lazy" decoding="async"
+                src="./assets/feature-structure-map.webp"
                 alt="3D underwater structure map showing drop-off, rock pile, grass edge, submerged wood, and deep hole"
               />
             </div>
@@ -304,12 +303,12 @@
 
             <div class="mobile-compare-row mobile-compare-products">
               <figure>
-                <img src="./assets/mobile-product-kastave-clean.png" alt="Kastave smart fishing sonar" />
+                <img loading="lazy" decoding="async" src="./assets/mobile-product-kastave-clean.webp" alt="Kastave smart fishing sonar" />
               </figure>
               <figure>
-                <img
+                <img loading="lazy" decoding="async"
                   data-mobile-compare-product-image
-                  src="./assets/mobile-product-portable-clean.png"
+                  src="./assets/mobile-product-portable-clean.webp"
                   alt="Portable sonar product"
                 />
               </figure>
@@ -338,13 +337,13 @@
             <div class="mobile-compare-row mobile-compare-visual">
               <span>Sonar visualization</span>
               <figure>
-                <img src="./assets/table-sonar-kastave.png" alt="Kastave 3D sonar structure visualization under a bridge" />
+                <img loading="lazy" decoding="async" src="./assets/table-sonar-kastave.webp" alt="Kastave 3D sonar structure visualization under a bridge" />
                 <figcaption class="compare-highlight">3D sonar + AI structure points</figcaption>
               </figure>
               <figure>
-                <img
+                <img loading="lazy" decoding="async"
                   data-mobile-compare-image
-                  src="./assets/table-sonar-portable.png"
+                  src="./assets/table-sonar-portable.webp"
                   alt="Portable sonar visualization with fish arches and bottom contour"
                 />
                 <figcaption data-mobile-compare-field="visual">App sonar + depth maps</figcaption>
@@ -356,8 +355,8 @@
         <div class="compare-cards" aria-label="Fishing sonar product categories">
           <article class="compare-card">
             <div class="compare-image">
-              <img
-                src="./assets/compare-portable-sonar.jpg"
+              <img loading="lazy" decoding="async"
+                src="./assets/compare-portable-sonar.webp"
                 alt="Castable portable sonar device on a white studio background"
               />
             </div>
@@ -367,8 +366,8 @@
 
           <article class="compare-card">
             <div class="compare-image">
-              <img
-                src="./assets/compare-boat-sonar.jpg"
+              <img loading="lazy" decoding="async"
+                src="./assets/compare-boat-sonar.webp"
                 alt="Premium boat-mounted sonar display with side-scan screen"
               />
             </div>
@@ -379,8 +378,8 @@
           <article class="compare-card compare-card-featured">
             <span class="compare-card-tag">Best for structure decisions</span>
             <div class="compare-image">
-              <img
-                src="./assets/compare-kastave.jpg"
+              <img loading="lazy" decoding="async"
+                src="./assets/compare-kastave.webp"
                 alt="Kastave smart fishing sonar boat product"
               />
             </div>
@@ -433,15 +432,15 @@
                 <th scope="row">Sonar visualization</th>
                 <td class="sonar-visual-cell" data-label="Portable sonar">
                   <span>App sonar + depth maps</span>
-                  <img src="./assets/table-sonar-portable.png" alt="Portable sonar visualization with fish arches and bottom contour" />
+                  <img loading="lazy" decoding="async" src="./assets/table-sonar-portable.webp" alt="Portable sonar visualization with fish arches and bottom contour" />
                 </td>
                 <td class="sonar-visual-cell" data-label="Boat-mounted sonar">
                   <span>Dedicated pro display</span>
-                  <img src="./assets/table-sonar-boat.png" alt="Premium boat-mounted sonar side scan visualization" />
+                  <img loading="lazy" decoding="async" src="./assets/table-sonar-boat.webp" alt="Premium boat-mounted sonar side scan visualization" />
                 </td>
                 <td class="kastave-cell sonar-visual-cell" data-label="Kastave">
                   <span class="compare-highlight">3D sonar + AI structure points</span>
-                  <img src="./assets/table-sonar-kastave.png" alt="Kastave 3D sonar structure visualization under a bridge" />
+                  <img loading="lazy" decoding="async" src="./assets/table-sonar-kastave.webp" alt="Kastave 3D sonar structure visualization under a bridge" />
                 </td>
               </tr>
             </tbody>
@@ -467,8 +466,8 @@
           <div class="scene-track">
             <div class="scene-grid scene-set">
               <figure class="scene-card">
-                <img
-                  src="./assets/lure-scene-seawall-cast.jpg"
+                <img loading="lazy" decoding="async"
+                  src="./assets/lure-scene-seawall-cast.webp"
                   alt="Lure angler casting near a seawall and breakwater"
                 />
                 <figcaption>
@@ -477,8 +476,8 @@
                 </figcaption>
               </figure>
               <figure class="scene-card">
-                <img
-                  src="./assets/lure-scene-lake-structure.jpg"
+                <img loading="lazy" decoding="async"
+                  src="./assets/lure-scene-lake-structure.webp"
                   alt="Lure angler fishing a lake shoreline with submerged vegetation"
                 />
                 <figcaption>
@@ -487,8 +486,8 @@
                 </figcaption>
               </figure>
               <figure class="scene-card">
-                <img
-                  src="./assets/lure-scene-urban-bank.jpg"
+                <img loading="lazy" decoding="async"
+                  src="./assets/lure-scene-urban-bank.webp"
                   alt="Lure angler casting beside an urban bridge and canal"
                 />
                 <figcaption>
@@ -497,8 +496,8 @@
                 </figcaption>
               </figure>
               <figure class="scene-card">
-                <img
-                  src="./assets/lure-scene-night-kayak.png"
+                <img loading="lazy" decoding="async"
+                  src="./assets/lure-scene-night-kayak.webp"
                   alt="Kayak angler fishing on a sunny lake near weed cover"
                 />
                 <figcaption>
@@ -507,8 +506,8 @@
                 </figcaption>
               </figure>
               <figure class="scene-card">
-                <img
-                  src="./assets/lure-scene-coastal-rocks.jpg"
+                <img loading="lazy" decoding="async"
+                  src="./assets/lure-scene-coastal-rocks.webp"
                   alt="Lure angler casting from coastal rocks toward open water"
                 />
                 <figcaption>
@@ -517,8 +516,8 @@
                 </figcaption>
               </figure>
               <figure class="scene-card">
-                <img
-                  src="./assets/lure-scene-river-wading.jpg"
+                <img loading="lazy" decoding="async"
+                  src="./assets/lure-scene-river-wading.webp"
                   alt="Lure angler wading in a clear rocky river"
                 />
                 <figcaption>
@@ -530,42 +529,42 @@
 
             <div class="scene-grid scene-set" aria-hidden="true">
               <figure class="scene-card">
-                <img src="./assets/lure-scene-seawall-cast.jpg" alt="" />
+                <img loading="lazy" decoding="async" src="./assets/lure-scene-seawall-cast.webp" alt="" />
                 <figcaption>
                   <strong>Seawall structure</strong>
                   <span>Read edges, rocks, and current breaks before casting.</span>
                 </figcaption>
               </figure>
               <figure class="scene-card">
-                <img src="./assets/lure-scene-lake-structure.jpg" alt="" />
+                <img loading="lazy" decoding="async" src="./assets/lure-scene-lake-structure.webp" alt="" />
                 <figcaption>
                   <strong>Lake weed edges</strong>
                   <span>Find shallow cover and transition lines faster.</span>
                 </figcaption>
               </figure>
               <figure class="scene-card">
-                <img src="./assets/lure-scene-urban-bank.jpg" alt="" />
+                <img loading="lazy" decoding="async" src="./assets/lure-scene-urban-bank.webp" alt="" />
                 <figcaption>
                   <strong>Urban canals</strong>
                   <span>Target bridge shade, walls, and hidden structure.</span>
                 </figcaption>
               </figure>
               <figure class="scene-card">
-                <img src="./assets/lure-scene-night-kayak.png" alt="" />
+                <img loading="lazy" decoding="async" src="./assets/lure-scene-night-kayak.webp" alt="" />
                 <figcaption>
                   <strong>Kayak fishing</strong>
                   <span>Scan weed edges, drop-offs, and casting lanes.</span>
                 </figcaption>
               </figure>
               <figure class="scene-card">
-                <img src="./assets/lure-scene-coastal-rocks.jpg" alt="" />
+                <img loading="lazy" decoding="async" src="./assets/lure-scene-coastal-rocks.webp" alt="" />
                 <figcaption>
                   <strong>Rocky shorelines</strong>
                   <span>Plan casts around rock piles and depth changes.</span>
                 </figcaption>
               </figure>
               <figure class="scene-card">
-                <img src="./assets/lure-scene-river-wading.jpg" alt="" />
+                <img loading="lazy" decoding="async" src="./assets/lure-scene-river-wading.webp" alt="" />
                 <figcaption>
                   <strong>River runs</strong>
                   <span>Understand pools, current lanes, and submerged stones.</span>
@@ -584,8 +583,8 @@
 
         <div class="proof-grid">
           <article class="proof-card">
-            <img
-              src="./assets/tester-largemouth-selfie.jpg"
+            <img loading="lazy" decoding="async"
+              src="./assets/tester-largemouth-selfie.webp"
               alt="Early tester holding a largemouth bass near a lake"
             />
             <div class="proof-body">
@@ -594,8 +593,8 @@
             </div>
           </article>
           <article class="proof-card">
-            <img
-              src="./assets/tester-river-smallmouth.jpg"
+            <img loading="lazy" decoding="async"
+              src="./assets/tester-river-smallmouth.webp"
               alt="Early tester holding a river smallmouth bass with Kastave floating nearby"
             />
             <div class="proof-body">
@@ -604,8 +603,8 @@
             </div>
           </article>
           <article class="proof-card">
-            <img
-              src="./assets/tester-night-striper.jpg"
+            <img loading="lazy" decoding="async"
+              src="./assets/tester-night-striper.webp"
               alt="Early tester holding a striped bass at night with Kastave nearby"
             />
             <div class="proof-body">

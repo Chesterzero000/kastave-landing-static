@@ -68,9 +68,9 @@ if (mobileCompareSelect) {
       ease: "Cast and retrieve",
       tech: "CHIRP sonar",
       visual: "App sonar + depth maps",
-      image: "./assets/table-sonar-portable.png",
+      image: "./assets/table-sonar-portable.webp",
       alt: "Portable sonar visualization with fish arches and bottom contour",
-      productImage: "./assets/mobile-product-portable-clean.png",
+      productImage: "./assets/mobile-product-portable-clean.webp",
       productAlt: "Portable sonar product",
     },
     boat: {
@@ -80,9 +80,9 @@ if (mobileCompareSelect) {
       ease: "Boat install required",
       tech: "CHIRP + side imaging",
       visual: "Dedicated pro display",
-      image: "./assets/table-sonar-boat.png",
+      image: "./assets/table-sonar-boat.webp",
       alt: "Premium boat-mounted sonar side scan visualization",
-      productImage: "./assets/mobile-product-boat-cutout.png",
+      productImage: "./assets/mobile-product-boat-cutout.webp",
       productAlt: "Boat-mounted sonar display product",
     },
   };
