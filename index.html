@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kastave | 3D Underwater Fish Finder</title>
+    <meta
+      name="description"
+      content="Reserve Kastave, a smart fish finder that reconstructs underwater terrain in 3D so anglers can read structure before they cast."
+    />
+    <meta property="og:title" content="Kastave | 3D Underwater Fish Finder" />
+    <meta
+      property="og:description"
+      content="A portable sonar device that turns underwater structure into a clear 3D terrain map."
+    />
+    <meta property="og:type" content="website" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-NHCT6J47');
+    </script>
+    <!-- End Google Tag Manager -->
+    <!-- Meta Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1542765323857764');
+      fbq('track', 'PageView');
+    </script>
+    <!-- End Meta Pixel Code -->
+    <meta name="theme-color" content="#03161b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NHCT6J47"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style="display:none"
+        src="https://www.facebook.com/tr?id=1542765323857764&ev=PageView&noscript=1"
+        alt=""
+      />
+    </noscript>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Kastave home">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="./assets/kastave-logo.png" alt="" />
+        </span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#features">Features</a>
+        <a href="#compare">Compare</a>
+        <a href="#scenarios">Scenarios</a>
+        <a href="#results">Results</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="header-cta" href="#reserve">Reserve $1</a>
+    </header>
+
+    <div class="depth-meter" id="depthMeter" aria-hidden="true">
+      <div class="depth-value"><span id="depthVal">0</span> ft</div>
+      <div class="depth-track"><i id="depthFill"></i></div>
+      <div class="depth-label">Scan depth</div>
+    </div>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <video
+          class="hero-bg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster="./assets/hero-kastave-lake.jpg"
+          aria-hidden="true"
+        >
+          <source src="./assets/hero-kastave-lake.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-copy">
+          <p class="eyebrow">Portable 3D sonar for lure anglers</p>
+          <h1 id="hero-title">See below. <em>Catch above.</em></h1>
+          <p class="hero-lede">
+            Every cast into unknown water is a guess. Drop Kastave in and it cruises the water on its own,
+            mapping the bottom in 3D — so you cast at structure, not at hope.
+          </p>
+          <figure class="mobile-product-peek" aria-label="Kastave product preview">
+            <img
+              src="./assets/hero-kastave-lake.jpg"
+              alt="Kastave sonar floating on lake water"
+            />
+          </figure>
+          <div class="launch-stats" aria-label="Launch highlights">
+            <div>
+              <strong>3D</strong>
+              <span>structure scan, bottom shape</span>
+            </div>
+            <div>
+              <strong>AI Spots</strong>
+              <span>drop-offs, grass, rocks</span>
+            </div>
+            <div>
+              <strong>Smart Cruise</strong>
+              <span>Patrols and scans on its own.</span>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-cue" aria-hidden="true">Dive in<span class="arrow">▼</span></div>
+      </section>
+
+      <section class="waterline" aria-hidden="true">
+        <div class="bubbles" id="bubbles"></div>
+      </section>
+
+      <section class="section intro" aria-labelledby="intro-title">
+        <div>
+          <p class="eyebrow">Why it matters</p>
+          <h2 id="intro-title">Traditional fish finders show echoes. Kastave shows shape.</h2>
+        </div>
+        <div class="intro-detail">
+          <p>
+            Reading underwater structure is what separates random casting from confident
+            decisions. Kastave is built for anglers who want to understand the bottom, not
+            just watch a scrolling line.
+          </p>
+          <div class="intro-points" aria-label="Why structure matters">
+            <span>Find the drop-off before the first cast</span>
+            <span>Separate fish-holding cover from dead water</span>
+            <span>Spend more time fishing the right lane</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section features-section" id="features" aria-label="Product features">
+        <div class="section-heading">
+          <p class="eyebrow">Core functions</p>
+          <h2>Turn unknown water into lure-fishing decisions.</h2>
+          <p>
+            Kastave is designed around the way lure anglers search water: scan the area,
+            identify structure, mark high-value targets, and cast with a clearer plan.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="feature-icon">01</span>
+            <h3>3D structure scan</h3>
+            <p>Build a visual terrain view of depth changes, ledges, holes, and underwater contours instead of reading flat sonar signals alone.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon">02</span>
+            <h3>AI structure points</h3>
+            <p>Pinpoints likely casting targets such as drop-offs, grass edges, submerged wood, rock piles, and deeper holding zones.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon">03</span>
+            <h3>Auto scan workflow</h3>
+            <p>Drop Kastave into the water and let it scan the area so bank, kayak, and small-boat anglers can start faster.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon">04</span>
+            <h3>Mobile map history</h3>
+            <p>View scans on your phone, save productive water, and return to structure that matched real bites on later trips.</p>
+          </article>
+        </div>
+
+        <div class="feature-stories">
+          <article class="feature-story">
+            <div class="feature-story-image">
+              <img
+                src="./assets/feature-app-3d-scan.jpg"
+                alt="Kastave app showing a 3D lake scan while the device floats nearby"
+              />
+            </div>
+            <div class="feature-story-copy">
+              <p class="eyebrow">Phone-first scanning</p>
+              <h3>Read depth, coverage, battery, and 3D structure from the bank.</h3>
+              <p>
+                The app view is built to answer the questions lure anglers ask before casting:
+                how deep is this lane, where does the bottom drop, where does cover begin, and
+                which part of the water deserves the next cast.
+              </p>
+              <ul class="check-list">
+                <li>Switch between 2D map and 3D structure view</li>
+                <li>Track depth range, water temperature, battery, and scan coverage</li>
+                <li>Mark fish signals and structure changes for repeatable spots</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="feature-story feature-story-reverse">
+            <div class="feature-story-image">
+              <img
+                src="./assets/feature-structure-map.jpg"
+                alt="3D underwater structure map showing drop-off, rock pile, grass edge, submerged wood, and deep hole"
+              />
+            </div>
+            <div class="feature-story-copy">
+              <p class="eyebrow">Structure intelligence</p>
+              <h3>Find the places fish use, not just the dots on a screen.</h3>
+              <p>
+                Kastave highlights the structure that matters for lure fishing: drop-offs for
+                ambush routes, grass edges for cover, submerged wood for holding fish, rock piles
+                for feeding areas, and deep holes for high-reward casts.
+              </p>
+              <ul class="check-list">
+                <li>Separate safe casts from high-risk snag zones</li>
+                <li>Identify productive structure zones before fan casting</li>
+                <li>Use AI structure points to plan smarter search routes</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section compare-section" id="compare" aria-labelledby="compare-title">
+        <div class="compare-heading">
+          <p class="eyebrow">Product comparison</p>
+          <h2 id="compare-title">Compare fishing sonar solutions.</h2>
+          <p>
+            Portable sonar shows depth. Boat systems are powerful but expensive.
+            Kastave is built for lure anglers who need structure fast without a complex install.
+          </p>
+        </div>
+
+        <div class="kastave-advantage" aria-label="Why Kastave wins for lure anglers">
+          <div class="kastave-advantage-copy">
+            <span class="winner-badge">Kastave advantage</span>
+            <h3>See the structure. Pick the cast.</h3>
+            <p>
+              Other sonar options give you readings. Kastave turns the scan into
+              a 3D structure map with AI-marked casting targets.
+            </p>
+          </div>
+          <div class="advantage-points" aria-label="Kastave key advantages">
+            <div>
+              <strong>3D bottom view</strong>
+              <span>Drop-offs, holes, grass edges, rock piles</span>
+            </div>
+            <div>
+              <strong>No boat install</strong>
+              <span>Drop in, auto scan, read from your phone</span>
+            </div>
+            <div>
+              <strong>AI structure points</strong>
+              <span>Highlights where to cast next</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-verdict" aria-label="Category verdict">
+          <div>
+            <span>Portable sonar</span>
+            <strong>Checks depth</strong>
+          </div>
+          <div>
+            <span>Boat-mounted sonar</span>
+            <strong>Requires a serious setup</strong>
+          </div>
+          <div>
+            <span>Kastave</span>
+            <strong>Shows where to cast next</strong>
+          </div>
+        </div>
+
+        <div class="mobile-comparison" aria-label="Mobile sonar comparison">
+          <div class="mobile-comparison-control">
+            <label for="mobileCompareSelect">Compare Kastave with</label>
+            <select id="mobileCompareSelect" aria-label="Choose sonar category to compare">
+              <option value="portable">Portable sonar</option>
+              <option value="boat">Boat-mounted sonar</option>
+            </select>
+          </div>
+
+          <div class="mobile-compare-columns" aria-live="polite">
+            <div class="mobile-compare-head">Kastave</div>
+            <div class="mobile-compare-head" data-mobile-compare-label>Portable sonar</div>
+
+            <div class="mobile-compare-row mobile-compare-products">
+              <figure>
+                <img src="./assets/mobile-product-kastave-clean.png" alt="Kastave smart fishing sonar" />
+              </figure>
+              <figure>
+                <img
+                  data-mobile-compare-product-image
+                  src="./assets/mobile-product-portable-clean.png"
+                  alt="Portable sonar product"
+                />
+              </figure>
+            </div>
+
+            <div class="mobile-compare-row">
+              <span>Price</span>
+              <strong>$699 target launch price</strong>
+              <strong data-mobile-compare-field="price">From $209.99</strong>
+            </div>
+            <div class="mobile-compare-row">
+              <span>Smart Cruise</span>
+              <strong class="compare-highlight">Smart Cruise. Patrols and scans on its own.</strong>
+              <strong data-mobile-compare-field="cruise">Manual cast and retrieve</strong>
+            </div>
+            <div class="mobile-compare-row">
+              <span>Ease of use</span>
+              <strong>Drop in and auto scan</strong>
+              <strong data-mobile-compare-field="ease">Cast and retrieve</strong>
+            </div>
+            <div class="mobile-compare-row">
+              <span>Technology</span>
+              <strong class="compare-highlight">3D sonar + CHIRP + multibeam</strong>
+              <strong data-mobile-compare-field="tech">CHIRP sonar</strong>
+            </div>
+            <div class="mobile-compare-row mobile-compare-visual">
+              <span>Sonar visualization</span>
+              <figure>
+                <img src="./assets/table-sonar-kastave.png" alt="Kastave 3D sonar structure visualization under a bridge" />
+                <figcaption class="compare-highlight">3D sonar + AI structure points</figcaption>
+              </figure>
+              <figure>
+                <img
+                  data-mobile-compare-image
+                  src="./assets/table-sonar-portable.png"
+                  alt="Portable sonar visualization with fish arches and bottom contour"
+                />
+                <figcaption data-mobile-compare-field="visual">App sonar + depth maps</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-cards" aria-label="Fishing sonar product categories">
+          <article class="compare-card">
+            <div class="compare-image">
+              <img
+                src="./assets/compare-portable-sonar.jpg"
+                alt="Castable portable sonar device on a white studio background"
+              />
+            </div>
+            <h3>Portable sonar</h3>
+            <p>Compact cast-and-retrieve sonar for quick depth checks.</p>
+          </article>
+
+          <article class="compare-card">
+            <div class="compare-image">
+              <img
+                src="./assets/compare-boat-sonar.jpg"
+                alt="Premium boat-mounted sonar display with side-scan screen"
+              />
+            </div>
+            <h3>Premium boat-mounted sonar</h3>
+            <p>Powerful installed systems built for dedicated boat setups.</p>
+          </article>
+
+          <article class="compare-card compare-card-featured">
+            <span class="compare-card-tag">Best for structure decisions</span>
+            <div class="compare-image">
+              <img
+                src="./assets/compare-kastave.jpg"
+                alt="Kastave smart fishing sonar boat product"
+              />
+            </div>
+            <h3>Kastave</h3>
+            <p>Smart fishing boat system for 3D structure reading and lure decisions.</p>
+            <div class="compare-badges" aria-label="Kastave highlights">
+              <span>Auto scan</span>
+              <span>Smart Cruise</span>
+              <span>AI structure points</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="comparison-table-wrap">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th scope="col">Feature</th>
+                <th scope="col">Portable sonar</th>
+                <th scope="col">Premium boat-mounted sonar</th>
+                <th scope="col">Kastave</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Price</th>
+                <td data-label="Portable sonar">From $209.99</td>
+                <td data-label="Boat-mounted sonar">$2,000+ setup</td>
+                <td class="kastave-cell" data-label="Kastave">$699 target launch price</td>
+              </tr>
+              <tr>
+                <th scope="row">Smart Cruise</th>
+                <td data-label="Portable sonar">Manual cast and retrieve</td>
+                <td data-label="Boat-mounted sonar">Manual boat positioning</td>
+                <td class="kastave-cell compare-highlight" data-label="Kastave">Smart Cruise. Patrols and scans on its own.</td>
+              </tr>
+              <tr>
+                <th scope="row">Ease of use</th>
+                <td data-label="Portable sonar">Cast and retrieve</td>
+                <td data-label="Boat-mounted sonar">Boat install required</td>
+                <td class="kastave-cell" data-label="Kastave">Drop in and auto scan</td>
+              </tr>
+              <tr>
+                <th scope="row">Technology</th>
+                <td data-label="Portable sonar">CHIRP sonar</td>
+                <td data-label="Boat-mounted sonar">CHIRP + side imaging</td>
+                <td class="kastave-cell compare-highlight" data-label="Kastave">3D sonar + CHIRP + multibeam</td>
+              </tr>
+              <tr>
+                <th scope="row">Sonar visualization</th>
+                <td class="sonar-visual-cell" data-label="Portable sonar">
+                  <span>App sonar + depth maps</span>
+                  <img src="./assets/table-sonar-portable.png" alt="Portable sonar visualization with fish arches and bottom contour" />
+                </td>
+                <td class="sonar-visual-cell" data-label="Boat-mounted sonar">
+                  <span>Dedicated pro display</span>
+                  <img src="./assets/table-sonar-boat.png" alt="Premium boat-mounted sonar side scan visualization" />
+                </td>
+                <td class="kastave-cell sonar-visual-cell" data-label="Kastave">
+                  <span class="compare-highlight">3D sonar + AI structure points</span>
+                  <img src="./assets/table-sonar-kastave.png" alt="Kastave 3D sonar structure visualization under a bridge" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="compare-footer">
+          <p>Representative category comparison based on public product positioning and launch targets.</p>
+          <a class="primary-button" href="#reserve">Reserve Kastave for $1</a>
+        </div>
+      </section>
+
+      <section class="section usage-scenes" id="scenarios" aria-labelledby="scenarios-title">
+        <div class="section-heading">
+          <p class="eyebrow">Lure fishing scenarios</p>
+          <h2 id="scenarios-title">Built for the water lure anglers actually search.</h2>
+          <p>
+            From seawalls and bridges to shallow weed edges and rocky river runs,
+            Kastave helps anglers read structure before choosing the next cast.
+          </p>
+        </div>
+        <div class="scene-carousel">
+          <div class="scene-track">
+            <div class="scene-grid scene-set">
+              <figure class="scene-card">
+                <img
+                  src="./assets/lure-scene-seawall-cast.jpg"
+                  alt="Lure angler casting near a seawall and breakwater"
+                />
+                <figcaption>
+                  <strong>Seawall structure</strong>
+                  <span>Read edges, rocks, and current breaks before casting.</span>
+                </figcaption>
+              </figure>
+              <figure class="scene-card">
+                <img
+                  src="./assets/lure-scene-lake-structure.jpg"
+                  alt="Lure angler fishing a lake shoreline with submerged vegetation"
+                />
+                <figcaption>
+                  <strong>Lake weed edges</strong>
+                  <span>Find shallow cover and transition lines faster.</span>
+                </figcaption>
+              </figure>
+              <figure class="scene-card">
+                <img
+                  src="./assets/lure-scene-urban-bank.jpg"
+                  alt="Lure angler casting beside an urban bridge and canal"
+                />
+                <figcaption>
+                  <strong>Urban canals</strong>
+                  <span>Target bridge shade, walls, and hidden structure.</span>
+                </figcaption>
+              </figure>
+              <figure class="scene-card">
+                <img
+                  src="./assets/lure-scene-night-kayak.png"
+                  alt="Kayak angler fishing on a sunny lake near weed cover"
+                />
+                <figcaption>
+                  <strong>Kayak fishing</strong>
+                  <span>Scan weed edges, drop-offs, and casting lanes.</span>
+                </figcaption>
+              </figure>
+              <figure class="scene-card">
+                <img
+                  src="./assets/lure-scene-coastal-rocks.jpg"
+                  alt="Lure angler casting from coastal rocks toward open water"
+                />
+                <figcaption>
+                  <strong>Rocky shorelines</strong>
+                  <span>Plan casts around rock piles and depth changes.</span>
+                </figcaption>
+              </figure>
+              <figure class="scene-card">
+                <img
+                  src="./assets/lure-scene-river-wading.jpg"
+                  alt="Lure angler wading in a clear rocky river"
+                />
+                <figcaption>
+                  <strong>River runs</strong>
+                  <span>Understand pools, current lanes, and submerged stones.</span>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="scene-grid scene-set" aria-hidden="true">
+              <figure class="scene-card">
+                <img src="./assets/lure-scene-seawall-cast.jpg" alt="" />
+                <figcaption>
+                  <strong>Seawall structure</strong>
+                  <span>Read edges, rocks, and current breaks before casting.</span>
+                </figcaption>
+              </figure>
+              <figure class="scene-card">
+                <img src="./assets/lure-scene-lake-structure.jpg" alt="" />
+                <figcaption>
+                  <strong>Lake weed edges</strong>
+                  <span>Find shallow cover and transition lines faster.</span>
+                </figcaption>
+              </figure>
+              <figure class="scene-card">
+                <img src="./assets/lure-scene-urban-bank.jpg" alt="" />
+                <figcaption>
+                  <strong>Urban canals</strong>
+                  <span>Target bridge shade, walls, and hidden structure.</span>
+                </figcaption>
+              </figure>
+              <figure class="scene-card">
+                <img src="./assets/lure-scene-night-kayak.png" alt="" />
+                <figcaption>
+                  <strong>Kayak fishing</strong>
+                  <span>Scan weed edges, drop-offs, and casting lanes.</span>
+                </figcaption>
+              </figure>
+              <figure class="scene-card">
+                <img src="./assets/lure-scene-coastal-rocks.jpg" alt="" />
+                <figcaption>
+                  <strong>Rocky shorelines</strong>
+                  <span>Plan casts around rock piles and depth changes.</span>
+                </figcaption>
+              </figure>
+              <figure class="scene-card">
+                <img src="./assets/lure-scene-river-wading.jpg" alt="" />
+                <figcaption>
+                  <strong>River runs</strong>
+                  <span>Understand pools, current lanes, and submerged stones.</span>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section tester-results" id="results" aria-labelledby="results-title">
+        <div class="section-heading">
+          <p class="eyebrow">Field proof</p>
+          <h2 id="results-title">When testers found structure,<br />the fish followed.</h2>
+        </div>
+
+        <div class="proof-grid">
+          <article class="proof-card">
+            <img
+              src="./assets/tester-largemouth-selfie.jpg"
+              alt="Early tester holding a largemouth bass near a lake"
+            />
+            <div class="proof-body">
+              <blockquote>“Scanned the bank in ten minutes, found the one lane with a real edge, and fished only that.”</blockquote>
+              <p class="proof-who">— Kastave field tester · California</p>
+            </div>
+          </article>
+          <article class="proof-card">
+            <img
+              src="./assets/tester-river-smallmouth.jpg"
+              alt="Early tester holding a river smallmouth bass with Kastave floating nearby"
+            />
+            <div class="proof-body">
+              <blockquote>“The map showed the current break behind the stones. First cast there got hit.”</blockquote>
+              <p class="proof-who">— Kastave field tester · Indiana</p>
+            </div>
+          </article>
+          <article class="proof-card">
+            <img
+              src="./assets/tester-night-striper.jpg"
+              alt="Early tester holding a striped bass at night with Kastave nearby"
+            />
+            <div class="proof-body">
+              <blockquote>“At night you can't read water at all. The 3D view was the only reason I knew where the drop was.”</blockquote>
+              <p class="proof-who">— Kastave field tester · Massachusetts</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="reserve-section" id="reserve" aria-labelledby="reserve-title">
+        <div class="reserve-copy">
+          <p class="eyebrow">Limited-time early-bird</p>
+          <h2 id="reserve-title">Reserve your Kastave Founder Batch spot for $1.</h2>
+          <p>
+            Your $1 reservation holds a priority place before launch and unlocks
+            a $100 early-backer credit toward the planned $699 launch price.
+          </p>
+          <div class="urgency-note">
+            <strong>Only 100 first-batch early-bird spots.</strong>
+            <span>The $100 launch credit is tied to this first batch and may not be available after these spots are claimed.</span>
+          </div>
+          <div class="spots-meter" aria-label="Founder Batch spot limit">
+            <div class="spots-meter-top">
+              <strong>23 spots left</strong>
+              <span>of 100</span>
+            </div>
+            <div class="spots-meter-bar" aria-hidden="true"><span></span></div>
+            <p>When the first batch is filled, the $100 early-bird credit may close.</p>
+          </div>
+          <ul class="checkout-list">
+            <li><strong>Pay $1 today</strong> to hold your early-bird place.</li>
+            <li><strong>Limited to the first 100 reservations</strong> in this launch batch.</li>
+            <li><strong>Save $100 later</strong> when Kastave opens for final purchase.</li>
+            <li><strong>No automatic $699 charge.</strong> We email you before final checkout.</li>
+            <li><strong>Refundable before launch</strong> if you change your mind.</li>
+          </ul>
+          <div class="trust-grid" aria-label="Reservation benefits">
+            <div>
+              <span>Secure checkout</span>
+              <strong>Stripe or PayPal</strong>
+            </div>
+            <div>
+              <span>Early access</span>
+              <strong>Limited to 100 spots</strong>
+            </div>
+            <div>
+              <span>Launch updates</span>
+              <strong>Sent by email</strong>
+            </div>
+          </div>
+        </div>
+        <div class="reserve-box" id="checkout" aria-label="Reservation checkout">
+          <p class="checkout-eyebrow">Reservation checkout</p>
+          <h3>Reserve Kastave for $1</h3>
+          <p class="checkout-subcopy">
+            <span class="desktop-checkout-copy">$1 today reserves one of 100 first-batch early-bird spots and unlocks $100 credit. No automatic $699 charge.</span>
+            <span class="mobile-checkout-copy">Secure your early-bird place.<br />Final purchase happens later.</span>
+          </p>
+          <div class="checkout-trust" aria-label="Reservation safeguards">
+            <span>Refundable before launch</span>
+            <span>No automatic final charge</span>
+          </div>
+          <div class="payment-actions" id="payment" aria-label="Reservation payment options">
+            <a
+              class="primary-button full-width"
+              href="https://buy.stripe.com/9B69AVbpieTIcPx9rBd7q00"
+              target="_blank"
+              rel="noopener"
+            >
+              Reserve with Stripe
+            </a>
+            <a
+              class="secondary-button full-width"
+              href="https://www.paypal.com/ncp/payment/6W9PTBNB267ZW"
+              target="_blank"
+              rel="noopener"
+            >
+              Reserve with PayPal
+            </a>
+          </div>
+          <p class="fine-print">
+            <span class="desktop-fine-print">After payment, you will receive confirmation by email. This reservation is not the final product purchase.</span>
+            <span class="mobile-fine-print">Email confirmation after payment. This is not the final product purchase.</span>
+          </p>
+          <div class="checkout-waitlist">
+            <strong>Skipping the $100 credit for now,<br />but want updates?</strong>
+            <span>Get prototype updates and launch timing without paying today.</span>
+            <a class="waitlist-button" href="https://tally.so/r/J9MNdJ" target="_blank" rel="noopener">Join the free waitlist</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section timeline" id="timeline" aria-labelledby="timeline-title">
+        <p class="eyebrow">Roadmap</p>
+        <h2 id="timeline-title">From field prototype to Kickstarter launch</h2>
+        <div class="timeline-list">
+          <div class="timeline-item">
+            <span>Now</span>
+            <h3>Field testing and founder reservations</h3>
+            <p>Validate 3D structure mapping, app workflow, waterproof performance, and early-backer demand with real lure anglers.</p>
+          </div>
+          <div class="timeline-item">
+            <span>Late 2026</span>
+            <h3>100 Founder Edition units</h3>
+            <p>Deliver the first 100 founder-version units to early supporters and collect structured field feedback before mass production.</p>
+          </div>
+          <div class="timeline-item">
+            <span>Mid 2027</span>
+            <h3>Mass production and Kickstarter</h3>
+            <p>Move into formal production planning, launch the Kickstarter campaign, and open broader availability after founder feedback is reviewed.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section faq" id="faq" aria-labelledby="faq-title">
+        <p class="eyebrow">Questions</p>
+        <h2 id="faq-title">Pre-order FAQ</h2>
+        <div class="faq-list">
+          <details>
+            <summary>What does the $1 reservation include?</summary>
+            <p>Your $1 reservation holds one first-batch early-bird spot and unlocks a $100 credit toward the planned $699 launch price when final purchase opens.</p>
+          </details>
+          <details>
+            <summary>Will I be charged $699 automatically?</summary>
+            <p>No. The $1 reservation is not the final product purchase. We will email you before final checkout, and you can decide whether to complete the order.</p>
+          </details>
+          <details>
+            <summary>Is the $1 reservation refundable?</summary>
+            <p>Yes. The reservation is refundable before final payment collection if you change your mind before launch.</p>
+          </details>
+          <details>
+            <summary>Why is the early-bird credit limited?</summary>
+            <p>The $100 credit is tied to the first 100 launch reservations. After those first-batch spots are claimed, the early-bird credit may no longer be available.</p>
+          </details>
+          <details>
+            <summary>How is Kastave different from 2D fish finders?</summary>
+            <p>Traditional 2D sonar shows signals that anglers still need to interpret. Kastave is designed to turn underwater readings into a clearer 3D structure view for lure-fishing decisions.</p>
+          </details>
+          <details>
+            <summary>What fishing situations is Kastave built for?</summary>
+            <p>Kastave is built for lure anglers searching banks, seawalls, canals, rocky shorelines, grass edges, drop-offs, submerged wood, and other structure-focused water.</p>
+          </details>
+          <details>
+            <summary>Does Kastave help guarantee bigger fish?</summary>
+            <p>No device can guarantee a catch. Kastave helps you read structure more clearly so you can choose better casting targets and reduce blind searching.</p>
+          </details>
+          <details>
+            <summary>Does Kastave need a phone app?</summary>
+            <p>Yes. The intended workflow pairs the device with a mobile app for 3D scan viewing, saved maps, structure points, and trip history.</p>
+          </details>
+          <details>
+            <summary>Can I use Kastave from the bank, kayak, or small boat?</summary>
+            <p>Yes. Kastave is designed as a portable scan system for bank anglers, kayak anglers, and small-boat users who want structure information without a complex installed setup.</p>
+          </details>
+          <details>
+            <summary>When will the first batch ship?</summary>
+            <p>We are currently validating field performance, app workflow, and production planning. Early backers will receive launch updates before final payment and fulfillment.</p>
+          </details>
+          <details>
+            <summary>Where will you ship?</summary>
+            <p>Shipping regions will be confirmed before final checkout based on logistics, taxes, and support coverage. Early backers will receive updates as launch details are finalized.</p>
+          </details>
+          <details>
+            <summary>Which payment methods can I use for the reservation?</summary>
+            <p>You can reserve through Stripe or PayPal using the checkout buttons on this page.</p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <nav class="mobile-sticky-cta" aria-label="Mobile conversion shortcuts">
+      <a class="sticky-compare" href="#compare">Compare</a>
+      <a class="sticky-reserve" href="#reserve">Reserve $1</a>
+    </nav>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <div>
+          <strong>Kastave</strong>
+          <span>3D underwater mapping for anglers.</span>
+        </div>
+        <a
+          class="social-link facebook-link"
+          href="https://www.facebook.com/share/1DcwmXPd2U/?mibextid=wwXIfr"
+          target="_blank"
+          rel="noopener"
+          aria-label="Visit Kastave on Facebook"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.025 1.792-4.697 4.533-4.697 1.313 0 2.686.236 2.686.236v2.971H15.83c-1.491 0-1.955.931-1.955 1.887v2.264h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
+          </svg>
+        </a>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:info@kastave.com">info@kastave.com</a>
+        <a class="footer-waitlist-button" href="https://tally.so/r/J9MNdJ" target="_blank" rel="noopener">Join the waitlist</a>
+      </div>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

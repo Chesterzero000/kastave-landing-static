@@ -1,0 +1,15 @@
+# Vercel CLI 本地绑定（走 git 自动部署后不需要）
+.vercel
+
+# 环境变量与密钥，绝不进仓库
+.env
+.env.*
+!.env.example
+
+# 依赖与缓存
+node_modules/
+.cache/
+
+# 系统文件
+.DS_Store
+Thumbs.db
