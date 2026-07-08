@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:," />
+    <title>Kastave | Reservation Confirmed</title>
+    <meta
+      name="description"
+      content="Your Kastave reservation has been received. Watch your email for confirmation and launch updates."
+    />
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = true;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = true;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+      fbq("init", "1542765323857764");
+      fbq("track", "PageView");
+
+      (function () {
+        function readCheckoutContext() {
+          try {
+            return JSON.parse(window.localStorage.getItem("kastave_checkout_context") || "{}");
+          } catch {
+            return {};
+          }
+        }
+
+        function markPurchaseSent(key) {
+          try {
+            window.localStorage.setItem(key, new Date().toISOString());
+          } catch {
+            // localStorage can be unavailable in strict privacy contexts.
+          }
+        }
+
+        function wasPurchaseSent(key) {
+          try {
+            return window.localStorage.getItem(key);
+          } catch {
+            return false;
+          }
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const checkoutContext = readCheckoutContext();
+        const confirmationId =
+          params.get("session_id") ||
+          params.get("checkout_session_id") ||
+          params.get("order_id") ||
+          params.get("token") ||
+          "";
+        const provider = params.get("provider") || checkoutContext.provider || "unknown";
+        const checkoutAge = Date.now() - Number(checkoutContext.createdAt || 0);
+        const hasRecentCheckout = checkoutContext.createdAt && checkoutAge < 24 * 60 * 60 * 1000;
+
+        if (!confirmationId && !hasRecentCheckout && !params.get("provider")) {
+          document.documentElement.dataset.purchaseTracking = "skipped";
+          return;
+        }
+
+        const eventID = confirmationId
+          ? `purchase_${confirmationId}`
+          : checkoutContext.purchaseEventId || `purchase_${Date.now()}`;
+        const sentKey = `kastave_purchase_sent_${eventID}`;
+
+        if (wasPurchaseSent(sentKey)) {
+          document.documentElement.dataset.purchaseTracking = "deduped";
+          return;
+        }
+
+        fbq(
+          "track",
+          "Purchase",
+          {
+            value: 1.0,
+            currency: "USD",
+            content_name: checkoutContext.content_name || "Kastave $1 Reservation",
+            content_ids: checkoutContext.content_ids || ["kastave-reservation-1usd"],
+            content_type: "product",
+            num_items: 1,
+            order_id: confirmationId || checkoutContext.checkoutEventId || eventID,
+            payment_provider: provider,
+          },
+          { eventID },
+        );
+        markPurchaseSent(sentKey);
+        document.documentElement.dataset.purchaseTracking = "sent";
+      })();
+    </script>
+    <link rel="stylesheet" href="styles.css?v=20260618-0742" />
+  </head>
+  <body>
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=1542765323857764&ev=PageView&noscript=1"
+        alt=""
+      />
+    </noscript>
+    <div class="announcement">
+      <strong>Welcome to Smart Fishing Life</strong>
+    </div>
+
+    <header class="shop-header">
+      <a class="logo" href="/">Kastave</a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="/#product">PRODUCT</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/#reserve">RESERVE</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="reserve" style="min-height: 70vh; align-items: center">
+        <div>
+          <span class="section-kicker">Reservation confirmed</span>
+          <h1>You're on the Kastave early list.</h1>
+          <p>
+            Your $1 reservation has been received. Watch your email for confirmation and launch updates before the
+            final checkout opens.
+          </p>
+          <ul class="reserve-points">
+            <li>Your early reservation offer is saved</li>
+            <li>No automatic final product charge will happen</li>
+            <li>We will email you before the final launch checkout</li>
+          </ul>
+        </div>
+        <div class="reserve-form payment-panel" aria-label="Reservation next steps">
+          <span class="payment-eyebrow">Next steps</span>
+          <h3>Check your inbox</h3>
+          <p>
+            Confirmation is sent by the payment provider. Keep an eye on updates from Kastave as launch details are
+            finalized.
+          </p>
+          <a class="button primary payment-button" href="/">Back to Kastave</a>
+          <a class="waitlist-link" href="mailto:info@kastave.com">Contact info@kastave.com</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <strong>Kastave</strong>
+      <a href="mailto:info@kastave.com">info@kastave.com</a>
+      <a href="/#privacy">Privacy Policy</a>
+      <a href="/#reserve">Reserve $1</a>
+    </footer>
+  </body>
+</html>

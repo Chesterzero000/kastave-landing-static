@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:," />
+    <title>Verify Reservation | Kastave</title>
+    <meta
+      name="description"
+      content="Complete a quick human verification before reserving Kastave for $1 through Stripe or PayPal."
+    />
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-NHCT6J47");
+    </script>
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = true;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = true;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+      fbq("init", "1542765323857764");
+      fbq("track", "PageView");
+    </script>
+    <script>
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "x7xd6753xs");
+    </script>
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileReady&render=explicit"
+      async
+      defer
+    ></script>
+    <link rel="stylesheet" href="styles.css?v=20260705-turnstile" />
+  </head>
+  <body class="verify-page">
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NHCT6J47"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe>
+    </noscript>
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=1542765323857764&ev=PageView&noscript=1"
+        alt=""
+      />
+    </noscript>
+
+    <header class="shop-header verify-header">
+      <a class="logo" href="index.html#top">Kastave</a>
+      <nav class="nav" aria-label="Verification navigation">
+        <a href="index.html#product">PRODUCT</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="index.html#reserve">RESERVE</a>
+      </nav>
+    </header>
+
+    <main class="verify-shell">
+      <section class="verify-card" aria-labelledby="verify-title">
+        <div class="verify-copy">
+          <span class="payment-eyebrow">Secure reservation check</span>
+          <h1 id="verify-title">One quick verification before checkout.</h1>
+          <p>
+            This step helps protect the $1 Kastave reservation page from automated card testing and spam traffic.
+          </p>
+          <div class="payment-alert">
+            You are charged $1 today only. Kastave will not automatically charge the $1299 final product price.
+          </div>
+        </div>
+
+        <div class="verify-box">
+          <div class="verify-choice">
+            <span>Selected payment method</span>
+            <strong id="selected-provider">Stripe</strong>
+          </div>
+
+          <div
+            id="turnstile-widget"
+            class="turnstile-widget"
+            data-sitekey="1x00000000000000000000AA"
+            aria-label="Cloudflare Turnstile human verification"
+          ></div>
+
+          <p class="verify-status" id="verify-status">Please complete the human verification to continue.</p>
+
+          <div class="verified-actions" id="verified-actions" hidden>
+            <a
+              class="button primary payment-button verified-checkout"
+              href="https://buy.stripe.com/9B69AVbpieTIcPx9rBd7q00"
+              target="_blank"
+              rel="noopener"
+              data-provider="stripe"
+              data-track="stripe_checkout"
+              data-payment-provider="stripe"
+              data-track-value="1.00"
+              data-track-currency="USD"
+              data-track-content-name="Kastave $1 Reservation"
+              data-track-content-id="kastave-reservation-1usd"
+            >Continue to Stripe</a>
+            <a
+              class="button primary payment-button verified-checkout"
+              href="https://www.paypal.com/ncp/payment/6W9PTBNB267ZW"
+              target="_blank"
+              rel="noopener"
+              data-provider="paypal"
+              data-track="paypal_checkout"
+              data-payment-provider="paypal"
+              data-track-value="1.00"
+              data-track-currency="USD"
+              data-track-content-name="Kastave $1 Reservation"
+              data-track-content-id="kastave-reservation-1usd"
+            >Continue to PayPal</a>
+          </div>
+
+          <p class="fine-print">
+            Local preview uses Cloudflare's test Turnstile site key. Replace it with a production site key before
+            uploading this page.
+          </p>
+          <a class="waitlist-link" href="index.html#reserve">Back to reservation options</a>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const providerLabels = {
+        stripe: "Stripe",
+        paypal: "PayPal",
+      };
+      const provider = new URLSearchParams(window.location.search).get("provider") || "stripe";
+      const activeProvider = providerLabels[provider] ? provider : "stripe";
+      const selectedProvider = document.querySelector("#selected-provider");
+      const statusText = document.querySelector("#verify-status");
+      const actions = document.querySelector("#verified-actions");
+      const checkoutLinks = [...document.querySelectorAll(".verified-checkout")];
+      const widget = document.querySelector("#turnstile-widget");
+
+      selectedProvider.textContent = providerLabels[activeProvider];
+      checkoutLinks.forEach((link) => {
+        link.hidden = link.dataset.provider !== activeProvider;
+      });
+
+      function setVerificationState(state) {
+        const isVerified = state === "verified";
+        actions.hidden = !isVerified;
+        statusText.textContent = isVerified
+          ? "Verification complete. Continue to your $1 reservation checkout."
+          : "Please complete the human verification to continue.";
+      }
+
+      window.onTurnstileReady = function () {
+        if (!window.turnstile || !widget) return;
+
+        window.turnstile.render("#turnstile-widget", {
+          sitekey: widget.dataset.sitekey,
+          callback: function () {
+            setVerificationState("verified");
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ event: "turnstile_verified", payment_provider: activeProvider });
+            if (typeof window.fbq === "function") {
+              window.fbq("trackCustom", "TurnstileVerified", { payment_provider: activeProvider });
+            }
+          },
+          "expired-callback": function () {
+            setVerificationState("expired");
+          },
+          "error-callback": function () {
+            statusText.textContent = "Verification could not load. Please refresh this page and try again.";
+          },
+        });
+      };
+    </script>
+    <script src="script.js?v=20260705-turnstile"></script>
+  </body>
+</html>
