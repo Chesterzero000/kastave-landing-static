@@ -159,7 +159,7 @@ function closeGalleryLightbox() {
   activeGalleryImage = null;
 }
 
-document.querySelectorAll(".team-profile-gallery img, .member-media-grid img").forEach((image) => {
+document.querySelectorAll(".team-profile-gallery img, .member-media-grid img, .field-test-gallery img").forEach((image) => {
   image.tabIndex = 0;
   image.setAttribute("role", "button");
   image.setAttribute("aria-label", image.alt ? `Open full-size image: ${image.alt}` : "Open full-size team image");
@@ -181,6 +181,78 @@ galleryLightboxClose?.addEventListener("click", closeGalleryLightbox);
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeGalleryLightbox();
 });
+
+const evidenceCarouselTrack = document.querySelector(".evidence-carousel-track");
+const evidenceReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
+let evidenceAutoplayTimer = null;
+
+function getEvidenceScrollStep() {
+  if (!evidenceCarouselTrack) return 0;
+  const firstCard = evidenceCarouselTrack.querySelector(".evidence-card");
+  const gap = parseFloat(getComputedStyle(evidenceCarouselTrack).gap) || 0;
+  const cardWidth = firstCard?.getBoundingClientRect().width || evidenceCarouselTrack.clientWidth;
+  return cardWidth + gap;
+}
+
+function scrollEvidenceCarousel(direction = 1) {
+  if (!evidenceCarouselTrack) return;
+  const maxScrollLeft = Math.max(0, evidenceCarouselTrack.scrollWidth - evidenceCarouselTrack.clientWidth);
+  if (maxScrollLeft <= 1) return;
+
+  if (direction > 0 && evidenceCarouselTrack.scrollLeft >= maxScrollLeft - 4) {
+    evidenceCarouselTrack.scrollTo({ left: 0, behavior: "smooth" });
+    return;
+  }
+
+  if (direction < 0 && evidenceCarouselTrack.scrollLeft <= 4) {
+    evidenceCarouselTrack.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
+    return;
+  }
+
+  evidenceCarouselTrack.scrollBy({
+    left: direction * getEvidenceScrollStep(),
+    behavior: "smooth",
+  });
+}
+
+function pauseEvidenceAutoplay() {
+  window.clearInterval(evidenceAutoplayTimer);
+  evidenceAutoplayTimer = null;
+}
+
+function startEvidenceAutoplay() {
+  if (!evidenceCarouselTrack || evidenceCarouselTrack.dataset.evidenceAutoplay !== "true" || evidenceReducedMotion) return;
+  pauseEvidenceAutoplay();
+  evidenceAutoplayTimer = window.setInterval(() => scrollEvidenceCarousel(1), 3600);
+}
+
+document.querySelectorAll("[data-evidence-direction]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const direction = button.dataset.evidenceDirection === "prev" ? -1 : 1;
+    scrollEvidenceCarousel(direction);
+    startEvidenceAutoplay();
+  });
+});
+
+if (evidenceCarouselTrack) {
+  evidenceCarouselTrack.addEventListener("mouseenter", pauseEvidenceAutoplay);
+  evidenceCarouselTrack.addEventListener("mouseleave", startEvidenceAutoplay);
+  evidenceCarouselTrack.addEventListener("focusin", pauseEvidenceAutoplay);
+  evidenceCarouselTrack.addEventListener("focusout", startEvidenceAutoplay);
+  evidenceCarouselTrack.addEventListener("pointerdown", pauseEvidenceAutoplay);
+  evidenceCarouselTrack.addEventListener("pointerup", startEvidenceAutoplay);
+  evidenceCarouselTrack.addEventListener("pointercancel", startEvidenceAutoplay);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      pauseEvidenceAutoplay();
+    } else {
+      startEvidenceAutoplay();
+    }
+  });
+
+  startEvidenceAutoplay();
+}
 
 function createMarketingEventId(prefix) {
   const cleanPrefix = prefix.replace(/[^a-z0-9]+/gi, "_").toLowerCase();
