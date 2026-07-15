@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kastave Split-Water Hero Demo</title>
+    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="./split-water-hero.css" />
+    <style>
+      body {
+        margin: 0;
+        background: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="split-water-hero" aria-label="Kastave sonar scouting preview" data-split-water-hero>
+      <div class="split-water-hero__scene" aria-hidden="true">
+        <picture class="split-water-hero__surface">
+          <source media="(max-width: 620px)" srcset="/assets/hero-real-water-mobile.webp?v=20260714" />
+          <img src="/assets/hero-real-water-desktop.png?v=20260714" alt="" />
+        </picture>
+        <div class="split-water-hero__underwater"></div>
+        <div class="split-water-hero__terrain">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="split-water-hero__product">
+          <span class="split-water-hero__product-body"></span>
+          <span class="split-water-hero__sensor split-water-hero__sensor--left"></span>
+          <span class="split-water-hero__sensor split-water-hero__sensor--right"></span>
+        </div>
+        <div class="split-water-hero__waterline"></div>
+        <canvas class="split-water-hero__canvas" aria-hidden="true" data-split-water-canvas></canvas>
+        <div class="split-water-hero__scan-labels" aria-hidden="true">
+          <span data-scan-label="drop">Drop edge</span>
+          <span data-scan-label="bottom">Hard bottom</span>
+          <span data-scan-label="zone">Cast zone</span>
+        </div>
+      </div>
+      <div class="split-water-hero__shade"></div>
+      <div class="split-water-hero__copy">
+        <span class="hero-badge">
+          <svg class="hero-badge-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="2.5"></circle>
+            <path d="M7.8 12a4.2 4.2 0 0 1 8.4 0"></path>
+            <path d="M4.5 12a7.5 7.5 0 0 1 15 0"></path>
+            <path d="M12 12l5.6 5.6"></path>
+          </svg>
+          AI Sonar Scouting
+        </span>
+        <h1>Map the Water Before You Cast</h1>
+        <p>Kastave scouts freshwater structure from the surface and turns sonar returns into casting decisions.</p>
+        <div class="split-water-hero__actions">
+          <a class="button primary" href="#reserve" data-track="hero_reserve_click">Reserve for $1</a>
+          <a class="button secondary split-water-hero__secondary" href="#sonar-reconstruction">See the scan workflow</a>
+        </div>
+        <dl class="split-water-hero__proof" aria-label="Kastave scan proof points">
+          <div>
+            <dt>20 m</dt>
+            <dd>Scan radius</dd>
+          </div>
+          <div>
+            <dt>Freshwater</dt>
+            <dd>Scouting system</dd>
+          </div>
+          <div>
+            <dt>3D</dt>
+            <dd>Structure preview</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+    <script src="./split-water-hero.js"></script>
+  </body>
+</html>

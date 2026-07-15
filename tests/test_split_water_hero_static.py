@@ -4,16 +4,25 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+COMPONENT = ROOT / "components" / "split-water-hero"
 
 
 class SplitWaterHeroStaticTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.html = (ROOT / "index.html").read_text()
-        cls.css = (ROOT / "styles.css").read_text()
-        cls.js = (ROOT / "script.js").read_text()
+        cls.html_path = COMPONENT / "split-water-hero.html"
+        cls.css_path = COMPONENT / "split-water-hero.css"
+        cls.js_path = COMPONENT / "split-water-hero.js"
+        cls.html = cls.html_path.read_text() if cls.html_path.exists() else ""
+        cls.css = cls.css_path.read_text() if cls.css_path.exists() else ""
+        cls.js = cls.js_path.read_text() if cls.js_path.exists() else ""
 
-    def test_homepage_uses_split_water_hero_instead_of_carousel(self):
+    def test_component_files_exist(self):
+        self.assertTrue(self.html_path.exists())
+        self.assertTrue(self.css_path.exists())
+        self.assertTrue(self.js_path.exists())
+
+    def test_component_uses_split_water_hero_not_carousel(self):
         self.assertIn("data-split-water-hero", self.html)
         self.assertIn('class="split-water-hero"', self.html)
         self.assertNotIn('class="slideshow"', self.html)
@@ -55,7 +64,7 @@ class SplitWaterHeroStaticTest(unittest.TestCase):
 
     def test_javascript_initializes_canvas_animation_safely(self):
         for marker in [
-            "function initSplitWaterHero()",
+            "function initSplitWaterHero",
             "requestAnimationFrame",
             "IntersectionObserver",
             "devicePixelRatio",
