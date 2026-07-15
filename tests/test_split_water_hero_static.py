@@ -69,6 +69,7 @@ class SplitWaterHeroStaticTest(unittest.TestCase):
             "IntersectionObserver",
             "devicePixelRatio",
             "drawSplitWaterHeroFrame",
+            "((elapsed % cycle) + cycle) % cycle",
         ]:
             self.assertIn(marker, self.js)
         self.assertRegex(self.js, r"Math\.min\(window\.devicePixelRatio \|\| 1, 2\)")

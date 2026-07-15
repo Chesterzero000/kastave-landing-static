@@ -56,7 +56,8 @@ function drawSplitWaterHeroContours(ctx, metrics, scanProgress) {
 function drawSplitWaterHeroFrame(ctx, metrics, elapsed) {
   const { width, height, originX, originY, waterlineY } = metrics;
   const cycle = 4200;
-  const progress = (elapsed % cycle) / cycle;
+  const normalizedElapsed = ((elapsed % cycle) + cycle) % cycle;
+  const progress = normalizedElapsed / cycle;
 
   ctx.clearRect(0, 0, width, height);
   ctx.save();
